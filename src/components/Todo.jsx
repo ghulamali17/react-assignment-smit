@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { FaEdit, FaTrashAlt, FaCheck } from 'react-icons/fa'; // Import icons
+import { FaEdit, FaTrashAlt, FaCheck } from 'react-icons/fa';
+import { useTheme } from '../ThemeContext';
 
 const Todo = () => {
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
+
   const [value, setValue] = useState('');
   const [items, setItems] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
 
   const handleAdd = () => {
     if (value.trim() === '') return;
-
     if (editIndex !== null) {
       const updated = [...items];
       updated[editIndex] = { text: value, completed: false };
@@ -37,9 +40,9 @@ const Todo = () => {
   };
 
   return (
-    <div className="bg-gray-800 min-h-screen flex justify-center items-start pt-12">
-      <div className="bg-white max-w-xl w-full p-6 rounded-lg shadow-lg space-y-6">
-        <h2 className="text-center text-2xl font-semibold text-gray-800">To-Do</h2>
+    <div className={`${isDark ? 'bg-gray-900 text-white' : 'bg-gray-100 text-black'} min-h-screen flex justify-center items-start pt-12`}>
+      <div className={`${isDark ? 'bg-gray-800 text-white' : 'bg-white text-black'} max-w-xl w-full p-6 rounded-lg shadow-lg space-y-6`}>
+        <h2 className="text-center text-2xl font-semibold">To-Do</h2>
 
         <div className="flex mb-4 space-x-3">
           <input
@@ -61,7 +64,7 @@ const Todo = () => {
           {items.map((item, index) => (
             <li
               key={index}
-              className="bg-gray-100 p-3 mb-2 flex justify-between items-center rounded-lg shadow-sm hover:bg-gray-200"
+              className="bg-gray-200 dark:bg-gray-700 p-3 mb-2 flex justify-between items-center rounded-lg shadow-sm"
             >
               <span
                 className={`${
@@ -72,25 +75,13 @@ const Todo = () => {
                 {item.text}
               </span>
               <div className="space-x-3 flex items-center">
-                <button
-                  onClick={() => handleEdit(index)}
-                  className="text-blue-500 hover:text-blue-700"
-                  title="Edit"
-                >
+                <button onClick={() => handleEdit(index)} className="text-blue-500 hover:text-blue-700">
                   <FaEdit size={20} />
                 </button>
-                <button
-                  onClick={() => handleDelete(index)}
-                  className="text-red-500 hover:text-red-700"
-                  title="Delete"
-                >
+                <button onClick={() => handleDelete(index)} className="text-red-500 hover:text-red-700">
                   <FaTrashAlt size={20} />
                 </button>
-                <button
-                  onClick={() => handleToggleCompletion(index)}
-                  className="text-green-500 hover:text-green-700"
-                  title="Done"
-                >
+                <button onClick={() => handleToggleCompletion(index)} className="text-green-500 hover:text-green-700">
                   <FaCheck size={20} />
                 </button>
               </div>
