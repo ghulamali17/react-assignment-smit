@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Loading from "../components/Loading";
 import { useNavigate, Link } from "react-router-dom";
-
+import { useTheme } from "../ThemeContext";
 function Product() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  // Sample addToCart function
-  const addToCartHandler = (item) => {
-    console.log("Added to cart:", item);
-    alert(`${item.title} added to cart!`);
-  };
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
 
   useEffect(() => {
     getData();
@@ -19,7 +15,7 @@ function Product() {
   const getData = async () => {
     try {
       const response = await fetch("https://fakestoreapi.com/products");
-      const result = await response.json(); 
+      const result = await response.json();
       setData(result);
       setLoading(false);
     } catch (error) {
@@ -33,7 +29,7 @@ function Product() {
       {loading ? (
         <Loading />
       ) : (
-        <div className="font-poppins bg-white text-black">
+        <div className={`${isDark ? "bg-gray-900 text-white" : "bg-white text-black"} font-poppins`}>
           {/* Title */}
           <div className="text-center mb-4">
             <h1 className="font-bold text-4xl pt-5">SHOP NOW</h1>
@@ -42,7 +38,10 @@ function Product() {
           {/* Product Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-[1170px] mx-auto gap-4 p-4">
             {data.map((item) => (
-              <div className="border rounded-lg p-4 shadow-md" key={item.id}>
+              <div
+                className={`border rounded-lg p-4 shadow-md ${isDark ? "bg-gray-800 text-white" : "bg-white text-black"}`}
+                key={item.id}
+              >
                 <div className="relative h-60 flex items-center justify-center">
                   <img
                     className="h-full object-contain"
@@ -65,7 +64,9 @@ function Product() {
 
                 {/* <button
                   onClick={() => addToCartHandler(item)}
-                  className="mt-3 w-full bg-black text-white py-2 rounded hover:bg-gray-800"
+                  className={`mt-3 w-full py-2 rounded ${
+                    isDark ? "bg-gray-700 hover:bg-gray-600" : "bg-black text-white hover:bg-gray-800"
+                  }`}
                 >
                   Add to Cart
                 </button> */}
