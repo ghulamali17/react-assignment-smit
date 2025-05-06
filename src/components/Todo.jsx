@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { FaEdit, FaTrashAlt, FaCheck } from 'react-icons/fa';
 import { useTheme } from '../ThemeContext';
 
 const Todo = () => {
@@ -75,15 +74,11 @@ const Todo = () => {
                 {item.text}
               </span>
               <div className="space-x-3 flex items-center">
-                <button onClick={() => handleEdit(index)} className="text-blue-500 hover:text-blue-700">
-                  <FaEdit size={20} />
-                </button>
-                <button onClick={() => handleDelete(index)} className="text-red-500 hover:text-red-700">
-                  <FaTrashAlt size={20} />
-                </button>
-                <button onClick={() => handleToggleCompletion(index)} className="text-green-500 hover:text-green-700">
-                  <FaCheck size={20} />
-                </button>
+                 <div className="flex gap-2">
+                <button onClick={() => handleEdit(index)} className="text-blue-500 text-sm">Edit</button>
+                <button onClick={() => handleDelete(index)} className="text-red-500 text-sm">Delete</button>
+                <button onClick={() => handleToggleCompletion(index)} className="text-green-500 text-sm">Done</button>
+              </div>
               </div>
             </li>
           ))}
