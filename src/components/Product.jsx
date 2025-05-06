@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Loading from "../components/Loading";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useTheme } from "../ThemeContext";
 function Product() {
   const [data, setData] = useState([]);
@@ -32,10 +32,10 @@ function Product() {
         <div className={`${isDark ? "bg-gray-900 text-white" : "bg-white text-black"} font-poppins`}>
           {/* Title */}
           <div className="text-center mb-4">
-            <h1 className="font-bold text-4xl pt-5">SHOP NOW</h1>
+            <h1 className="font-bold text-4xl pt-5">Product</h1>
           </div>
 
-          {/* Product Grid */}
+          {/* Product */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-[1170px] mx-auto gap-4 p-4">
             {data.map((item) => (
               <div
@@ -61,15 +61,6 @@ function Product() {
                   <p className="text-xl font-bold">${item.price}</p>
                   <p className="text-sm line-through text-gray-500">$999</p>
                 </div>
-
-                {/* <button
-                  onClick={() => addToCartHandler(item)}
-                  className={`mt-3 w-full py-2 rounded ${
-                    isDark ? "bg-gray-700 hover:bg-gray-600" : "bg-black text-white hover:bg-gray-800"
-                  }`}
-                >
-                  Add to Cart
-                </button> */}
 
                 <Link
                   to={`/products/${item.id}`}
