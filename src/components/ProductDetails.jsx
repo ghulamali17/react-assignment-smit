@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Loading from "../components/Loading";
+import { useTheme } from '../ThemeContext';
 
 const ProductDetails = () => {
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
+
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
@@ -29,9 +33,8 @@ const ProductDetails = () => {
 
 
   if (loading || !product) return <Loading />;
-
   return (
-    <div className="py-8 mt-[100px] font-poppins bg-white text-black">
+    <div  className={`${isDark ? "bg-gray-900 text-white" : "bg-white text-black"} font-poppins`}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row -mx-4">
           {/* Left Side */}
@@ -48,9 +51,9 @@ const ProductDetails = () => {
           </div>
 
           {/* Right Side */}
-          <div className="md:flex-1 px-4">
+          <div className={`${isDark ? "bg-gray-900 text-white" : "bg-white text-black"} font-poppins md:flex-1 px-4`}>
             <h2 className="text-2xl font-bold mb-2">{product.title}</h2>
-            <p className="text-sm mb-4 text-gray-700">{product.description}</p>
+            <p className={`${isDark ? "bg-gray-900 text-white" : "bg-white text-gray-700"} text-sm mb-4 `}>{product.description}</p>
 
             <div className="mb-4">
               <p className="font-bold">Price: <span className="ml-2 text-xl">${product.price}</span></p>
